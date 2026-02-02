@@ -93,12 +93,52 @@ class ProductController extends Controller
         $product->load('images');
 
         foreach ($product->images as $img) {
-            Storage::disk('public_uploads')->delete($img->path);
+            $this->deleteImageFile((string) $img->path);
         }
 
         $product->delete();
 
         return back()->with('status', 'Produk dihapus.');
+    }
+
+    public function destroyImage(Product $product, ProductImage $image)
+    {
+        // Safety: ensure the image belongs to the product in the URL
+        if ((int) $image->product_id !== (int) $product->id) {
+            abort(404);
+        }
+
+        $wasPrimary = (bool) $image->is_primary;
+
+        $this->deleteImageFile((string) $image->path);
+        $image->delete();
+
+        // If primary image removed, ensure another one becomes primary (if any)
+        if ($wasPrimary && $product->images()->exists()) {
+            if ($product->images()->where('is_primary', true)->doesntExist()) {
+                $first = $product->images()->orderBy('sort_order')->first();
+                if ($first) {
+                    $first->is_primary = true;
+                    $first->save();
+                }
+            }
+        }
+
+        return back()->with('status', 'Gambar dihapus.');
+    }
+
+    protected function deleteImageFile(string $path): void
+    {
+        $path = ltrim($path, '/');
+        if ($path === '') {
+            return;
+        }
+
+        // New storage: directly under /public
+        Storage::disk('public_uploads')->delete($path);
+
+        // Backward compatibility: older records stored in storage/app/public
+        Storage::disk('public')->delete($path);
     }
 
     protected function syncImages(Product $product, Request $request): void

@@ -17,6 +17,9 @@ Route::prefix('admin')
         Route::resource('categories', CategoryController::class)->except(['show']);
         Route::resource('products', ProductController::class)->except(['show']);
 
+        Route::delete('products/{product}/images/{image}', [ProductController::class, 'destroyImage'])
+            ->name('products.images.destroy');
+
         Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
         Route::get('orders/{order}', [OrderController::class, 'show'])->name('orders.show');
         Route::patch('orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.status');
