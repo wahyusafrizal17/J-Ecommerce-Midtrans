@@ -32,7 +32,15 @@ class ProductImage extends Model
 
     public function url(): string
     {
-        return asset('storage/' . ltrim($this->path, '/'));
+        $relativePath = ltrim((string) $this->path, '/');
+
+        // Preferred: files stored directly under /public (e.g. /products/xyz.jpg)
+        if ($relativePath !== '' && file_exists(public_path($relativePath))) {
+            return asset($relativePath);
+        }
+
+        // Backward compatibility: older records stored under storage/app/public (served via /storage symlink)
+        return asset('storage/' . $relativePath);
     }
 }
 

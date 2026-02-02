@@ -93,7 +93,7 @@ class ProductController extends Controller
         $product->load('images');
 
         foreach ($product->images as $img) {
-            Storage::disk('public')->delete($img->path);
+            Storage::disk('public_uploads')->delete($img->path);
         }
 
         $product->delete();
@@ -108,10 +108,12 @@ class ProductController extends Controller
             return;
         }
 
+        Storage::disk('public_uploads')->makeDirectory('products');
+
         $startSort = (int) ($product->images()->max('sort_order') ?? 0);
 
         foreach (array_values($files) as $idx => $file) {
-            $path = Storage::disk('public')->putFile('products', $file);
+            $path = Storage::disk('public_uploads')->putFile('products', $file);
 
             ProductImage::query()->create([
                 'product_id' => $product->id,

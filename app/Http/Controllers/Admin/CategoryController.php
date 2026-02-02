@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CategoryStoreRequest;
 use App\Http\Requests\Admin\CategoryUpdateRequest;
 use App\Models\Category;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Str;
 
 class CategoryController extends Controller
@@ -64,7 +65,25 @@ class CategoryController extends Controller
 
     public function destroy(Category $category)
     {
-        $category->delete();
+        $productsCount = $category->products()->count();
+        if ($productsCount > 0) {
+            return back()->withErrors([
+                'category' => "Kategori sedang digunakan oleh {$productsCount} produk dan tidak bisa dihapus. Pindahkan/hapus produknya dulu.",
+            ]);
+        }
+
+        try {
+            $category->delete();
+        } catch (QueryException $e) {
+            // Fallback safety in case of any FK constraint / race condition.
+            if ((string) $e->getCode() === '23000') {
+                return back()->withErrors([
+                    'category' => 'Kategori sedang digunakan dan tidak bisa dihapus.',
+                ]);
+            }
+
+            throw $e;
+        }
 
         return back()->with('status', 'Kategori dihapus.');
     }
