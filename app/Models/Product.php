@@ -73,7 +73,11 @@ class Product extends Model
 
     public function primaryImage(): HasOne
     {
-        return $this->hasOne(ProductImage::class)->where('is_primary', true);
+        // Prefer the explicitly marked primary image, but gracefully fall back
+        // to the first image (by sort_order) when legacy data has no primary.
+        return $this->hasOne(ProductImage::class)
+            ->orderByDesc('is_primary')
+            ->orderBy('sort_order');
     }
 
     public function displayPrice(): string
