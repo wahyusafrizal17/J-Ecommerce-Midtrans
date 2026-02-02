@@ -47,37 +47,37 @@
                 </div>
             </div>
 
-            @if($product->images->isNotEmpty())
-                <div class="mt-2">
-                    <p class="text-xs font-semibold text-slate-600">Gambar saat ini</p>
-                    <div class="mt-2 grid grid-cols-5 gap-2">
-                        @foreach($product->images as $img)
-                            <div class="relative aspect-square overflow-hidden rounded-xl border border-slate-200 bg-slate-100">
-                                <img src="{{ $img->url() }}" alt="" class="h-full w-full object-cover">
-
-                                <form
-                                    action="{{ route('admin.products.images.destroy', [$product, $img]) }}"
-                                    method="POST"
-                                    class="absolute right-1 top-1"
-                                    onsubmit="return confirm('Hapus gambar ini?')"
-                                >
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="rounded-lg bg-rose-600/90 px-2 py-1 text-[10px] font-extrabold text-white hover:bg-rose-700">
-                                        Hapus
-                                    </button>
-                                </form>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            @endif
-
             <div class="flex gap-3">
                 <button class="rounded-2xl bg-[#7367f0] px-5 py-2 text-sm font-extrabold text-white hover:bg-[#645bd6]">Simpan</button>
                 <a href="{{ route('admin.products.index') }}" class="rounded-xl border border-slate-200 px-5 py-2 text-sm font-semibold hover:bg-slate-50">Batal</a>
             </div>
         </form>
+
+        @if($product->images->isNotEmpty())
+            <div class="mt-6">
+                <p class="text-xs font-semibold text-slate-600">Gambar saat ini</p>
+                <div class="mt-2 grid grid-cols-5 gap-2">
+                    @foreach($product->images as $img)
+                        <div class="relative aspect-square overflow-hidden rounded-xl border border-slate-200 bg-slate-100">
+                            <img src="{{ $img->url() }}" alt="" class="h-full w-full object-cover">
+
+                            <form
+                                action="{{ route('admin.products.images.destroy', [$product, $img]) }}"
+                                method="POST"
+                                class="absolute right-1 top-1"
+                                onsubmit="return confirm('Hapus gambar ini?')"
+                            >
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="rounded-lg bg-rose-600/90 px-2 py-1 text-[10px] font-extrabold text-white hover:bg-rose-700">
+                                    Hapus
+                                </button>
+                            </form>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @endif
     </div>
 </x-admin-layout>
 
