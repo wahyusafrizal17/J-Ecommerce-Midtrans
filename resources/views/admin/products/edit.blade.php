@@ -64,13 +64,20 @@
                             <form
                                 action="{{ route('admin.products.images.destroy', [$product, $img]) }}"
                                 method="POST"
-                                class="absolute right-1 top-1"
+                                class="absolute right-2 top-2 z-10"
                                 onsubmit="return confirm('Hapus gambar ini?')"
                             >
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="rounded-lg bg-rose-600/90 px-2 py-1 text-[10px] font-extrabold text-white hover:bg-rose-700">
-                                    Hapus
+                                <button
+                                    type="submit"
+                                    class="inline-flex items-center gap-1 rounded-full bg-rose-600 px-2.5 py-1.5 text-xs font-extrabold text-white shadow-lg ring-1 ring-white/70 hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-300"
+                                    title="Hapus gambar"
+                                >
+                                    <svg viewBox="0 0 24 24" fill="none" class="h-3.5 w-3.5" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5a1 1 0 011-1h4a1 1 0 011 1v2m-8 0l1 14h6l1-14" />
+                                    </svg>
+                                    <span>Hapus</span>
                                 </button>
                             </form>
                         </div>
