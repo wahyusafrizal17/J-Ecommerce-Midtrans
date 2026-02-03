@@ -6,8 +6,8 @@
     RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -d
     RewriteRule ^(.*)$ public/$1 [L]
 
-    # Sisanya (route Laravel) ke public/index.php; kirim URI asli agar Laravel dapat route
+    # Sisanya (route Laravel) ke public/index.php; kirim URI asli (env + query fallback)
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^(.*)$ public/index.php [L,QSA,E=ORIGINAL_URI:%{REQUEST_URI}]
+    RewriteRule ^(.*)$ public/index.php?_url=$1 [L,QSA,E=ORIGINAL_URI:%{REQUEST_URI}]
 </IfModule>
