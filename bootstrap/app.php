@@ -18,7 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         // Midtrans webhook (external POST) - exclude from CSRF protection
         $middleware->validateCsrfTokens(except: [
-            'payments/midtrans/notification',
+            'store/payments/midtrans/notification',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
