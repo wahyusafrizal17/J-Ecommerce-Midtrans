@@ -12,6 +12,16 @@ use Illuminate\Support\Facades\Route;
 // Root redirect ke storefront
 Route::redirect('/', '/store', 302);
 
+// Redirect URL lama (tanpa /store/) ke URL baru agar link/bookmark/email tetap jalan
+Route::redirect('/orders', '/store/orders', 302);
+Route::get('/orders/{id}', function (string $id) {
+    return redirect('/store/orders/' . $id, 302);
+})->whereNumber('id')->name('legacy.orders.show');
+Route::redirect('/payments/finish', '/store/payments/finish', 302);
+Route::get('/payments/{id}', function (string $id) {
+    return redirect('/store/payments/' . $id, 302);
+})->whereNumber('id');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

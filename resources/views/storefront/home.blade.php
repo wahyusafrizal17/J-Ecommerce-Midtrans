@@ -4,7 +4,7 @@
         <section class="relative overflow-hidden rounded-3xl border border-slate-200 bg-white">
             <div class="absolute inset-0">
                 <img
-                    src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1800&q=80"
+                    src="{{ asset('home-banner.png') }}"
                     alt="Karma style banner"
                     class="h-full w-full object-cover"
                     loading="lazy"
@@ -20,12 +20,12 @@
             <div class="relative px-6 py-14 sm:px-10">
                 <div class="grid items-center gap-10 md:grid-cols-2">
                     <div>
-                        <p class="text-xs font-extrabold tracking-widest text-slate-700">NEW COLLECTION</p>
+                        {{-- <p class="text-xs font-extrabold tracking-widest text-slate-700">NEW COLLECTION</p> --}}
                         <h1 class="mt-3 text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
-                            Nike New Collection!
+                            Mau Cosplay apa hari ini?
                         </h1>
                         <p class="mt-4 max-w-xl text-sm leading-relaxed text-slate-600">
-                            Tampilan modern ala Karma: clean, bold, dan fokus ke produk. Jelajahi katalog, filter, lalu checkout cepat.
+                            Jelajahi katalog, filter, lalu checkout cepat.
                         </p>
 
                         <div class="mt-7 flex flex-col gap-3 sm:flex-row">
