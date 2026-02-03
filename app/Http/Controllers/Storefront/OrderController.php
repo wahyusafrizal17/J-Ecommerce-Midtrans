@@ -21,7 +21,10 @@ class OrderController extends Controller
 
     public function show(Request $request, Order $order)
     {
-        abort_unless($order->user_id === $request->user()->id, 404);
+        // Order ada tapi bukan milik user yang login → 403 + pesan jelas (bukan 404)
+        if ($order->user_id !== $request->user()->id) {
+            abort(403, 'Pesanan ini bukan milik akun Anda.');
+        }
 
         $order->load(['items', 'payment']);
 
