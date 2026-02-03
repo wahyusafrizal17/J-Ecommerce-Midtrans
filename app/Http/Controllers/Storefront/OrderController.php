@@ -21,9 +21,12 @@ class OrderController extends Controller
 
     public function show(Request $request, Order $order)
     {
-        // Order ada tapi bukan milik user yang login → 403 + pesan jelas (bukan 404)
-        if ($order->user_id !== $request->user()->id) {
-            abort(403, 'Pesanan ini bukan milik akun Anda.');
+        $currentUserId = (int) $request->user()->id;
+        $orderUserId = (int) $order->user_id;
+
+        if ($orderUserId !== $currentUserId) {
+            return redirect()->route('orders.index', [], false)
+                ->with('error', 'Pesanan ini bukan milik akun Anda atau sesi berubah. Silakan cek riwayat pesanan di bawah.');
         }
 
         $order->load(['items', 'payment']);
