@@ -1,4 +1,14 @@
 <x-storefront-layout>
+    @if(session('error'))
+        <div class="mb-4 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+            {{ session('error') }}
+        </div>
+    @endif
+    @if(session('success'))
+        <div class="mb-4 rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
+            {{ session('success') }}
+        </div>
+    @endif
     <div class="rounded-2xl border border-slate-200 bg-white">
         <div class="border-b border-slate-200 p-5">
             <h1 class="text-lg font-semibold">Riwayat Pesanan</h1>

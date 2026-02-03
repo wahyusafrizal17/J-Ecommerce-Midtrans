@@ -11,8 +11,13 @@ class PaymentController extends Controller
 {
     public function pay(Request $request, Order $order)
     {
-        if ($order->user_id !== $request->user()->id) {
-            abort(403, 'Pesanan ini bukan milik akun Anda.');
+        // Izinkan jika: (1) pesanan milik user yang login, atau (2) redirect dari checkout dengan signed URL (session bisa bermasalah)
+        $isOwner = (int) $order->user_id === (int) $request->user()->id;
+        $hasValidSignedUrl = $request->hasValidSignature();
+
+        if (!$isOwner && !$hasValidSignedUrl) {
+            return redirect()->route('orders.index', [], false)
+                ->with('error', 'Pesanan ini bukan milik akun Anda atau sesi berubah. Silakan cek riwayat pesanan di bawah.');
         }
 
         $order->load('payment');

@@ -14,6 +14,7 @@ use App\Services\MidtransService;
 use App\Services\RajaOngkirService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
 
 class CheckoutController extends Controller
 {
@@ -174,8 +175,9 @@ class CheckoutController extends Controller
                 // clear cart
                 $cart->items()->delete();
 
-                // Use relative URL so redirect works even if APP_URL wrongly includes /public (e.g. shared hosting)
-                return redirect()->to(route('payments.pay', [$order], false));
+                // Signed URL agar halaman bayar tetap bisa dibuka setelah redirect (mencegah 403 jika session bermasalah)
+                $payUrl = URL::temporarySignedRoute('payments.pay', now()->addMinutes(15), ['order' => $order]);
+                return redirect()->to($payUrl);
             });
         } catch (\Throwable $e) {
             return back()
