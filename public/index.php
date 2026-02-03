@@ -5,6 +5,12 @@ use Illuminate\Http\Request;
 
 define('LARAVEL_START', microtime(true));
 
+// Jika request di-rewrite dari root .htaccess (doc root = project root), pulihkan REQUEST_URI asli
+$originalUri = $_SERVER['REDIRECT_ORIGINAL_URI'] ?? $_SERVER['ORIGINAL_URI'] ?? null;
+if ($originalUri !== null && $originalUri !== '') {
+    $_SERVER['REQUEST_URI'] = $originalUri;
+}
+
 // Determine if the application is in maintenance mode...
 if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php')) {
     require $maintenance;

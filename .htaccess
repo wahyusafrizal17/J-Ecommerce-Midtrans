@@ -1,0 +1,13 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # File/folder yang ada di public/ (gambar, CSS, JS, dll) dilayani langsung
+    RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -f [OR]
+    RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -d
+    RewriteRule ^(.*)$ public/$1 [L]
+
+    # Sisanya (route Laravel) ke public/index.php; kirim URI asli agar Laravel dapat route
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.*)$ public/index.php [L,QSA,E=ORIGINAL_URI:%{REQUEST_URI}]
+</IfModule>
