@@ -148,12 +148,12 @@ class ProductController extends Controller
             return;
         }
 
-        Storage::disk('public_uploads')->makeDirectory('products');
+        Storage::disk('public_uploads')->makeDirectory('product-images');
 
         $startSort = (int) ($product->images()->max('sort_order') ?? 0);
 
         foreach (array_values($files) as $idx => $file) {
-            $path = Storage::disk('public_uploads')->putFile('products', $file);
+            $path = Storage::disk('public_uploads')->putFile('product-images', $file);
 
             ProductImage::query()->create([
                 'product_id' => $product->id,

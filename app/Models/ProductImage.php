@@ -35,9 +35,8 @@ class ProductImage extends Model
     {
         $relativePath = ltrim((string) $this->path, '/');
 
-        // Preferred: files stored directly under /public (e.g. products/xyz.jpg → /products/xyz.jpg)
-        // This avoids relying on `file_exists()` which can be restricted in some shared host environments.
-        if ($relativePath !== '' && Str::startsWith($relativePath, ['products/', 'products\\'])) {
+        // Files under /public: product-images/ (new, avoids conflict with route /products) or products/ (legacy)
+        if ($relativePath !== '' && Str::startsWith($relativePath, ['products/', 'products\\', 'product-images/', 'product-images\\'])) {
             return asset(str_replace('\\', '/', $relativePath));
         }
 
