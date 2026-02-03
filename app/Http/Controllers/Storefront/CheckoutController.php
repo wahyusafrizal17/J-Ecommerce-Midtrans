@@ -174,7 +174,8 @@ class CheckoutController extends Controller
                 // clear cart
                 $cart->items()->delete();
 
-                return redirect()->route('payments.pay', $order);
+                // Use relative URL so redirect works even if APP_URL wrongly includes /public (e.g. shared hosting)
+                return redirect()->to(route('payments.pay', [$order], false));
             });
         } catch (\Throwable $e) {
             return back()

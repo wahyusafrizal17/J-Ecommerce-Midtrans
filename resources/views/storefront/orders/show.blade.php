@@ -67,7 +67,7 @@
 
                 @if(($order->payment?->status ?? 'pending') === 'pending' && $order->payment?->snap_token)
                     <div class="mt-5">
-                        <a href="{{ route('payments.pay', $order) }}" class="block rounded-xl bg-slate-900 px-4 py-3 text-center text-sm font-semibold text-white hover:bg-slate-800">
+                        <a href="{{ route('payments.pay', [$order], false) }}" class="block rounded-xl bg-slate-900 px-4 py-3 text-center text-sm font-semibold text-white hover:bg-slate-800">
                             Bayar Sekarang
                         </a>
                     </div>
