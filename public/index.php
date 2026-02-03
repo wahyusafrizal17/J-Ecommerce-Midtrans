@@ -7,6 +7,14 @@ define('LARAVEL_START', microtime(true));
 
 // Jika request di-rewrite dari root .htaccess (doc root = project root), pulihkan REQUEST_URI asli
 $originalUri = $_SERVER['REDIRECT_ORIGINAL_URI'] ?? $_SERVER['ORIGINAL_URI'] ?? null;
+if ($originalUri === null || $originalUri === '') {
+    $urlParam = $_GET['_url'] ?? null;
+    if ($urlParam !== null && $urlParam !== '') {
+        $originalUri = '/' . ltrim($urlParam, '/');
+        unset($_GET['_url']);
+        $_SERVER['QUERY_STRING'] = http_build_query($_GET);
+    }
+}
 if ($originalUri !== null && $originalUri !== '') {
     $_SERVER['REQUEST_URI'] = $originalUri;
 }
