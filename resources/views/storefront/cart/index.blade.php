@@ -1,4 +1,14 @@
 <x-storefront-layout>
+    @if(session('error'))
+        <div class="mb-4 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+            {{ session('error') }}
+        </div>
+    @endif
+    @if(session('status'))
+        <div class="mb-4 rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
+            {{ session('status') }}
+        </div>
+    @endif
     <div class="grid gap-6 lg:grid-cols-12">
         <section class="lg:col-span-8">
             <div class="rounded-2xl border border-slate-200 bg-white">
