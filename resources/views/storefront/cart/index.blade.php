@@ -21,7 +21,7 @@
                                         <p class="text-sm font-semibold">{{ $item->product?->name }}</p>
                                         <p class="mt-1 text-sm text-slate-600">{{ $item->product?->displayPrice() }}</p>
                                     </div>
-                                    <form action="{{ route('cart.items.destroy', $item) }}" method="POST">
+                                    <form action="{{ route('cart.items.destroy', [$item], false) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button class="rounded-lg border border-slate-200 px-3 py-2 text-xs hover:bg-slate-50">Hapus</button>
@@ -29,7 +29,7 @@
                                 </div>
 
                                 <div class="mt-3 flex items-center justify-between">
-                                    <form action="{{ route('cart.items.update', $item) }}" method="POST" class="flex items-center gap-2">
+                                    <form action="{{ route('cart.items.update', [$item], false) }}" method="POST" class="flex items-center gap-2">
                                         @csrf
                                         @method('PATCH')
                                         <input name="qty" type="number" min="1" max="99" value="{{ $item->qty }}" class="w-24 rounded-xl border border-slate-200 px-3 py-2 text-sm focus:border-slate-400 focus:ring-0">
@@ -44,7 +44,7 @@
                         </div>
                     @empty
                         <div class="p-8 text-center text-sm text-slate-600">
-                            Keranjang kosong. <a href="{{ route('products.index') }}" class="font-semibold text-slate-900 hover:underline">Belanja sekarang</a>.
+                            Keranjang kosong. <a href="{{ route('products.index', [], false) }}" class="font-semibold text-slate-900 hover:underline">Belanja sekarang</a>.
                         </div>
                     @endforelse
                 </div>
@@ -79,16 +79,16 @@
                 <div class="mt-5 grid gap-3">
                     @if($cart->items->isNotEmpty())
                         @auth
-                            <a href="{{ route('checkout.index') }}" class="rounded-xl bg-slate-900 px-4 py-3 text-center text-sm font-semibold text-white hover:bg-slate-800">
+                            <a href="{{ route('checkout.index', [], false) }}" class="rounded-xl bg-slate-900 px-4 py-3 text-center text-sm font-semibold text-white hover:bg-slate-800">
                                 Checkout
                             </a>
                         @else
-                            <a href="{{ route('login') }}" class="rounded-xl bg-slate-900 px-4 py-3 text-center text-sm font-semibold text-white hover:bg-slate-800">
+                            <a href="{{ route('login', [], false) }}" class="rounded-xl bg-slate-900 px-4 py-3 text-center text-sm font-semibold text-white hover:bg-slate-800">
                                 Login untuk Checkout
                             </a>
                         @endauth
                     @endif
-                    <a href="{{ route('products.index') }}" class="rounded-xl border border-slate-200 px-4 py-3 text-center text-sm font-semibold hover:bg-slate-50">
+                    <a href="{{ route('products.index', [], false) }}" class="rounded-xl border border-slate-200 px-4 py-3 text-center text-sm font-semibold hover:bg-slate-50">
                         Lanjut Belanja
                     </a>
                 </div>

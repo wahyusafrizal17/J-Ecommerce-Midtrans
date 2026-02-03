@@ -7,14 +7,14 @@
         provinces: @js($provinces),
         defaultCourier: @js($defaultCourier),
         subtotal: @js($subtotal),
-        citiesUrl: @js(route('checkout.cities')),
-        districtsUrl: @js(route('checkout.districts')),
-        costsUrl: @js(route('checkout.costs')),
+        citiesUrl: @js(route('checkout.cities', [], false)),
+        districtsUrl: @js(route('checkout.districts', [], false)),
+        costsUrl: @js(route('checkout.costs', [], false)),
         csrf: @js(csrf_token()),
         rajaOngkirReady: @js($rajaOngkirReady ?? false),
     })" class="grid gap-6 lg:grid-cols-12">
         <section class="lg:col-span-8">
-            <form action="{{ route('checkout.store') }}" method="POST" class="rounded-2xl border border-slate-200 bg-white p-5">
+            <form action="{{ route('checkout.store', [], false) }}" method="POST" class="rounded-2xl border border-slate-200 bg-white p-5">
                 @csrf
                 <h1 class="text-lg font-semibold">Checkout</h1>
                 <p class="mt-1 text-sm text-slate-600">Lengkapi alamat pengiriman dan pilih layanan kurir.</p>

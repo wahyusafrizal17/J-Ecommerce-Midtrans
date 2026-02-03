@@ -26,7 +26,7 @@
 <header class="sticky top-0 z-40 border-b border-slate-800 bg-slate-900/95 backdrop-blur">
     <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
         <div class="flex items-center gap-4">
-            <a href="{{ route('home') }}" class="text-lg font-extrabold tracking-tight">
+            <a href="{{ route('home', [], false) }}" class="text-lg font-extrabold tracking-tight">
                 <span class="text-white">Cosplayer</span><span class="text-slate-200">Wardrobe</span>
             </a>
         </div>
@@ -37,16 +37,16 @@
         @endphp
 
         <nav class="hidden items-center gap-6 text-sm font-semibold md:flex">
-            <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? $navActive : $navBase }}">Home</a>
-            <a href="{{ route('products.index') }}" class="{{ request()->routeIs('products.*') ? $navActive : $navBase }}">Shop</a>
+            <a href="{{ route('home', [], false) }}" class="{{ request()->routeIs('home') ? $navActive : $navBase }}">Home</a>
+            <a href="{{ route('products.index', [], false) }}" class="{{ request()->routeIs('products.*') ? $navActive : $navBase }}">Shop</a>
             @auth
                 <a href="{{ route('orders.index', [], false) }}" class="{{ request()->routeIs('orders.*') ? $navActive : $navBase }}">Orders</a>
             @endauth
-            <a href="{{ route('products.index', ['sort' => 'recommended']) }}" class="{{ request()->fullUrlIs(route('products.index', ['sort' => 'recommended'])) ? $navActive : $navBase }}">Deals</a>
+            <a href="{{ route('products.index', ['sort' => 'recommended'], false) }}" class="{{ request()->fullUrlIs(route('products.index', ['sort' => 'recommended'])) ? $navActive : $navBase }}">Deals</a>
         </nav>
 
         <div class="flex items-center gap-2">
-            <form action="{{ route('products.index') }}" method="GET" class="hidden md:block">
+            <form action="{{ route('products.index', [], false) }}" method="GET" class="hidden md:block">
                 <div class="relative">
                     <input
                         name="q"
@@ -61,7 +61,7 @@
                 </div>
             </form>
 
-            <a href="{{ route('cart.index') }}" class="relative inline-flex items-center rounded-full border border-slate-700 bg-slate-800 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-700">
+            <a href="{{ route('cart.index', [], false) }}" class="relative inline-flex items-center rounded-full border border-slate-700 bg-slate-800 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-700">
                 <svg class="mr-2 h-4 w-4 text-slate-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M6 6h15l-1.5 9h-12z" />
                     <path d="M6 6l-2-3H2" />
@@ -91,7 +91,7 @@
                     </div>
                 </div>
             @else
-                <a href="{{ route('login') }}" class="rounded-full bg-white px-4 py-2 text-sm font-extrabold text-slate-900 hover:bg-slate-100">Login</a>
+                <a href="{{ route('login', [], false) }}" class="rounded-full bg-white px-4 py-2 text-sm font-extrabold text-slate-900 hover:bg-slate-100">Login</a>
             @endauth
         </div>
     </div>
