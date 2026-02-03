@@ -37,7 +37,7 @@
                     @endif
                 </div>
 
-                <form action="{{ route('cart.store') }}" method="POST" class="mt-6 grid gap-3">
+                <form action="{{ route('cart.store', [], false) }}" method="POST" class="mt-6 grid gap-3">
                     @csrf
                     <input type="hidden" name="product_id" value="{{ $product->id }}">
                     <div class="grid grid-cols-3 gap-3">
@@ -62,11 +62,11 @@
         <section class="mt-12">
             <div class="flex items-center justify-between">
                 <h2 class="text-lg font-semibold">Produk Terkait</h2>
-                <a href="{{ route('products.index', ['category' => $product->category?->slug]) }}" class="text-sm text-slate-600 hover:text-slate-900">Lihat kategori</a>
+                <a href="{{ route('products.index', ['category' => $product->category?->slug], false) }}" class="text-sm text-slate-600 hover:text-slate-900">Lihat kategori</a>
             </div>
             <div class="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
                 @foreach($related as $p)
-                    <a href="{{ route('products.show', $p) }}" class="group overflow-hidden rounded-2xl border border-slate-200 bg-white hover:shadow-sm">
+                    <a href="{{ route('products.show', [$p], false) }}" class="group overflow-hidden rounded-2xl border border-slate-200 bg-white hover:shadow-sm">
                         <div class="aspect-square bg-slate-100">
                             @if($p->primaryImage)
                                 <img src="{{ $p->primaryImage->url() }}" alt="{{ $p->name }}" class="h-full w-full object-cover transition group-hover:scale-[1.02]">

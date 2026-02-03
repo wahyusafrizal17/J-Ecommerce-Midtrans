@@ -29,10 +29,10 @@
                         </p>
 
                         <div class="mt-7 flex flex-col gap-3 sm:flex-row">
-                            <a href="{{ route('products.index') }}" class="inline-flex items-center justify-center rounded-full bg-slate-900 px-6 py-3 text-sm font-extrabold text-white hover:bg-slate-800">
+                            <a href="{{ route('products.index', [], false) }}" class="inline-flex items-center justify-center rounded-full bg-slate-900 px-6 py-3 text-sm font-extrabold text-white hover:bg-slate-800">
                                 Shop Now
                             </a>
-                            <a href="{{ route('products.index', ['sort' => 'recommended']) }}" class="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-extrabold text-slate-900 hover:bg-slate-50">
+                            <a href="{{ route('products.index', ['sort' => 'recommended'], false) }}" class="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-extrabold text-slate-900 hover:bg-slate-50">
                                 Recommended
                             </a>
                         </div>
@@ -91,11 +91,11 @@
         <section class="grid gap-4">
             <div class="flex items-center justify-between">
                 <h2 class="text-lg font-semibold">Kategori</h2>
-                <a href="{{ route('products.index') }}" class="text-sm text-slate-600 hover:text-slate-900">Lihat semua</a>
+                <a href="{{ route('products.index', [], false) }}" class="text-sm text-slate-600 hover:text-slate-900">Lihat semua</a>
             </div>
             <div class="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-8">
                 @foreach($categories as $cat)
-                    <a href="{{ route('products.index', ['category' => $cat->slug]) }}" class="rounded-2xl border border-slate-200 bg-white px-4 py-4 text-sm font-extrabold hover:border-slate-900/25 hover:bg-slate-900/5">
+                    <a href="{{ route('products.index', ['category' => $cat->slug], false) }}" class="rounded-2xl border border-slate-200 bg-white px-4 py-4 text-sm font-extrabold hover:border-slate-900/25 hover:bg-slate-900/5">
                         {{ $cat->name }}
                     </a>
                 @endforeach
@@ -105,11 +105,11 @@
         <section class="grid gap-4">
             <div class="flex items-center justify-between">
                 <h2 class="text-lg font-semibold">Produk Unggulan</h2>
-                <a href="{{ route('products.index', ['sort' => 'recommended']) }}" class="text-sm text-slate-600 hover:text-slate-900">Lihat semua</a>
+                <a href="{{ route('products.index', ['sort' => 'recommended'], false) }}" class="text-sm text-slate-600 hover:text-slate-900">Lihat semua</a>
             </div>
             <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
                 @foreach($featuredProducts as $p)
-                    <a href="{{ route('products.show', $p) }}" class="group overflow-hidden rounded-2xl border border-slate-200 bg-white hover:shadow-sm">
+                    <a href="{{ route('products.show', [$p], false) }}" class="group overflow-hidden rounded-2xl border border-slate-200 bg-white hover:shadow-sm">
                         <div class="relative aspect-square bg-slate-100">
                             @if($p->primaryImage)
                                 <img src="{{ $p->primaryImage->url() }}" alt="{{ $p->name }}" class="h-full w-full object-cover transition group-hover:scale-[1.02]">
@@ -137,11 +137,11 @@
         <section class="grid gap-4">
             <div class="flex items-center justify-between">
                 <h2 class="text-lg font-semibold">Produk Terbaru</h2>
-                <a href="{{ route('products.index') }}" class="text-sm text-slate-600 hover:text-slate-900">Lihat semua</a>
+                <a href="{{ route('products.index', [], false) }}" class="text-sm text-slate-600 hover:text-slate-900">Lihat semua</a>
             </div>
             <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
                 @foreach($newArrivals as $p)
-                    <a href="{{ route('products.show', $p) }}" class="group overflow-hidden rounded-2xl border border-slate-200 bg-white hover:shadow-sm">
+                    <a href="{{ route('products.show', [$p], false) }}" class="group overflow-hidden rounded-2xl border border-slate-200 bg-white hover:shadow-sm">
                         <div class="relative aspect-square bg-slate-100">
                             @if($p->primaryImage)
                                 <img src="{{ $p->primaryImage->url() }}" alt="{{ $p->name }}" class="h-full w-full object-cover transition group-hover:scale-[1.02]">

@@ -7,12 +7,12 @@
                 <div class="mt-4">
                     <p class="text-xs font-semibold text-slate-500">Kategori</p>
                     <div class="mt-2 grid gap-1">
-                        <a href="{{ route('products.index', array_filter(['q' => $q, 'sort' => $sort])) }}"
+                        <a href="{{ route('products.index', array_filter(['q' => $q, 'sort' => $sort]), false) }}"
                            class="rounded-lg px-3 py-2 text-sm {{ !$categorySlug ? 'bg-slate-900 text-white' : 'hover:bg-slate-50' }}">
                             Semua
                         </a>
                         @foreach($categories as $cat)
-                            <a href="{{ route('products.index', array_filter(['q' => $q, 'sort' => $sort, 'category' => $cat->slug])) }}"
+                            <a href="{{ route('products.index', array_filter(['q' => $q, 'sort' => $sort, 'category' => $cat->slug]), false) }}"
                                class="rounded-lg px-3 py-2 text-sm {{ $categorySlug === $cat->slug ? 'bg-slate-900 text-white' : 'hover:bg-slate-50' }}">
                                 {{ $cat->name }}
                             </a>
@@ -26,13 +26,13 @@
                         @php
                             $base = array_filter(['q' => $q, 'category' => $categorySlug]);
                         @endphp
-                        <a href="{{ route('products.index', $base) }}"
+                        <a href="{{ route('products.index', $base, false) }}"
                            class="rounded-lg px-3 py-2 text-sm {{ !$sort ? 'bg-slate-900 text-white' : 'hover:bg-slate-50' }}">Terbaru</a>
-                        <a href="{{ route('products.index', array_merge($base, ['sort' => 'cheapest'])) }}"
+                        <a href="{{ route('products.index', array_merge($base, ['sort' => 'cheapest']), false) }}"
                            class="rounded-lg px-3 py-2 text-sm {{ $sort === 'cheapest' ? 'bg-slate-900 text-white' : 'hover:bg-slate-50' }}">Termurah</a>
-                        <a href="{{ route('products.index', array_merge($base, ['sort' => 'recommended'])) }}"
+                        <a href="{{ route('products.index', array_merge($base, ['sort' => 'recommended']), false) }}"
                            class="rounded-lg px-3 py-2 text-sm {{ $sort === 'recommended' ? 'bg-slate-900 text-white' : 'hover:bg-slate-50' }}">Disarankan</a>
-                        <a href="{{ route('products.index', array_merge($base, ['sort' => 'best'])) }}"
+                        <a href="{{ route('products.index', array_merge($base, ['sort' => 'best']), false) }}"
                            class="rounded-lg px-3 py-2 text-sm {{ $sort === 'best' ? 'bg-slate-900 text-white' : 'hover:bg-slate-50' }}">Best Seller</a>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                         @if($q) · Pencarian: <span class="font-semibold">{{ $q }}</span>@endif
                     </p>
                 </div>
-                <form action="{{ route('products.index') }}" method="GET" class="w-full max-w-sm">
+                <form action="{{ route('products.index', [], false) }}" method="GET" class="w-full max-w-sm">
                     <input type="hidden" name="category" value="{{ $categorySlug }}">
                     <input type="hidden" name="sort" value="{{ $sort }}">
                     <input name="q" value="{{ $q }}" placeholder="Cari produk..." class="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:border-slate-400 focus:ring-0">
@@ -57,7 +57,7 @@
 
             <div class="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
                 @forelse($products as $p)
-                    <a href="{{ route('products.show', $p) }}" class="group overflow-hidden rounded-2xl border border-slate-200 bg-white hover:shadow-sm">
+                    <a href="{{ route('products.show', [$p], false) }}" class="group overflow-hidden rounded-2xl border border-slate-200 bg-white hover:shadow-sm">
                         <div class="aspect-square bg-slate-100">
                             @if($p->primaryImage)
                                 <img src="{{ $p->primaryImage->url() }}" alt="{{ $p->name }}" class="h-full w-full object-cover transition group-hover:scale-[1.02]">

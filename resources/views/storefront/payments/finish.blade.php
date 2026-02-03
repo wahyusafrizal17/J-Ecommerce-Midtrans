@@ -9,7 +9,7 @@
                 <a href="{{ route('orders.index', [], false) }}" class="flex-1 rounded-xl bg-slate-900 px-5 py-3 text-center text-sm font-semibold text-white hover:bg-slate-800">
                     Riwayat Pesanan
                 </a>
-                <a href="{{ route('home') }}" class="flex-1 rounded-xl border border-slate-200 px-5 py-3 text-center text-sm font-semibold hover:bg-slate-50">
+                <a href="{{ route('home', [], false) }}" class="flex-1 rounded-xl border border-slate-200 px-5 py-3 text-center text-sm font-semibold hover:bg-slate-50">
                     Kembali ke Home
                 </a>
             </div>
