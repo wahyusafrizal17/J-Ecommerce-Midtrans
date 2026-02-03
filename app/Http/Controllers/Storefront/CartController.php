@@ -47,7 +47,7 @@ class CartController extends Controller
         $item->qty = $newQty;
         $item->save();
 
-        return redirect()->route('cart.index', [], false)->with('status', 'Produk ditambahkan ke keranjang.');
+        return redirect()->to(route('cart.index', [], false))->with('status', 'Produk ditambahkan ke keranjang.');
     }
 
     public function update(Request $request, CartItem $cartItem)
@@ -58,18 +58,18 @@ class CartController extends Controller
 
         $cart = $this->getCart($request);
         if ((int) $cartItem->cart_id !== (int) $cart->id) {
-            return redirect()->route('cart.index', [], false)->with('error', 'Item tidak ditemukan.');
+            return redirect()->to(route('cart.index', [], false))->with('error', 'Item tidak ditemukan.');
         }
 
         $cartItem->load('product');
         if ($cartItem->product && $cartItem->product->stock < (int) $data['qty']) {
-            return redirect()->route('cart.index', [], false)->withErrors(['qty' => 'Stok tidak cukup.']);
+            return redirect()->to(route('cart.index', [], false))->withErrors(['qty' => 'Stok tidak cukup.']);
         }
 
         $cartItem->qty = (int) $data['qty'];
         $cartItem->save();
 
-        return redirect()->route('cart.index', [], false)->with('status', 'Keranjang diperbarui.');
+        return redirect()->to(route('cart.index', [], false))->with('status', 'Keranjang diperbarui.');
     }
 
     public function destroy(Request $request, int|string $cartItem)
@@ -83,13 +83,13 @@ class CartController extends Controller
             ->first();
 
         if (!$item) {
-            return redirect()->route('cart.index', [], false)
+            return redirect()->to(route('cart.index', [], false))
                 ->with('error', 'Item tidak ditemukan atau sudah dihapus.');
         }
 
         $item->delete();
 
-        return redirect()->route('cart.index', [], false)->with('status', 'Item dihapus.');
+        return redirect()->to(route('cart.index', [], false))->with('status', 'Item dihapus.');
     }
 
     protected function getCart(Request $request): Cart

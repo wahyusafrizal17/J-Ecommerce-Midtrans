@@ -25,7 +25,7 @@ class OrderController extends Controller
         $orderUserId = (int) $order->user_id;
 
         if ($orderUserId !== $currentUserId) {
-            return redirect()->route('orders.index', [], false)
+            return redirect()->to(route('orders.index', [], false))
                 ->with('error', 'Pesanan ini bukan milik akun Anda atau sesi berubah. Silakan cek riwayat pesanan di bawah.');
         }
 

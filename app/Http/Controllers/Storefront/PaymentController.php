@@ -16,14 +16,14 @@ class PaymentController extends Controller
         $hasValidSignedUrl = $request->hasValidSignature();
 
         if (!$isOwner && !$hasValidSignedUrl) {
-            return redirect()->route('orders.index', [], false)
+            return redirect()->to(route('orders.index', [], false))
                 ->with('error', 'Pesanan ini bukan milik akun Anda atau sesi berubah. Silakan cek riwayat pesanan di bawah.');
         }
 
         $order->load('payment');
 
         if (!$order->payment?->snap_token) {
-            return redirect()->route('orders.show', [$order], false)
+            return redirect()->to(route('orders.show', [$order], false))
                 ->withErrors(['payment' => 'Token pembayaran tidak tersedia. Silakan cek detail pesanan atau buat pesanan baru.']);
         }
 
