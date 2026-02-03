@@ -26,7 +26,7 @@
                 <button id="pay-button" @disabled(blank($clientKey)) class="flex-1 rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60">
                     Bayar Sekarang
                 </button>
-                <a href="{{ route('orders.show', $order) }}" class="flex-1 rounded-xl border border-slate-200 px-5 py-3 text-center text-sm font-semibold hover:bg-slate-50">
+                <a href="{{ route('orders.show', [$order], false) }}" class="flex-1 rounded-xl border border-slate-200 px-5 py-3 text-center text-sm font-semibold hover:bg-slate-50">
                     Lihat Detail Order
                 </a>
             </div>
@@ -46,13 +46,13 @@
             document.getElementById('pay-button').addEventListener('click', function () {
                 window.snap.pay(token, {
                     onSuccess: function () {
-                        window.location.href = @js(route('orders.show', $order));
+                        window.location.href = @js(route('orders.show', [$order], false));
                     },
                     onPending: function () {
-                        window.location.href = @js(route('orders.show', $order));
+                        window.location.href = @js(route('orders.show', [$order], false));
                     },
                     onError: function () {
-                        window.location.href = @js(route('orders.show', $order));
+                        window.location.href = @js(route('orders.show', [$order], false));
                     },
                     onClose: function () {
                         // user closed without finishing

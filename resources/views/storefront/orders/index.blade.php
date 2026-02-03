@@ -19,7 +19,7 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <p class="text-sm font-bold">{{ $order->displayGrandTotal() }}</p>
-                        <a href="{{ route('orders.show', $order) }}" class="rounded-xl border border-slate-200 px-4 py-2 text-sm font-semibold hover:bg-slate-50">
+                        <a href="{{ route('orders.show', [$order], false) }}" class="rounded-xl border border-slate-200 px-4 py-2 text-sm font-semibold hover:bg-slate-50">
                             Detail
                         </a>
                     </div>

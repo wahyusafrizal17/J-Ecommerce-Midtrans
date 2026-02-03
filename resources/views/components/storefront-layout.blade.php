@@ -40,7 +40,7 @@
             <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? $navActive : $navBase }}">Home</a>
             <a href="{{ route('products.index') }}" class="{{ request()->routeIs('products.*') ? $navActive : $navBase }}">Shop</a>
             @auth
-                <a href="{{ route('orders.index') }}" class="{{ request()->routeIs('orders.*') ? $navActive : $navBase }}">Orders</a>
+                <a href="{{ route('orders.index', [], false) }}" class="{{ request()->routeIs('orders.*') ? $navActive : $navBase }}">Orders</a>
             @endauth
             <a href="{{ route('products.index', ['sort' => 'recommended']) }}" class="{{ request()->fullUrlIs(route('products.index', ['sort' => 'recommended'])) ? $navActive : $navBase }}">Deals</a>
         </nav>
@@ -81,7 +81,7 @@
                         <svg class="ml-2 h-4 w-4 text-slate-200" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.94a.75.75 0 111.08 1.04l-4.24 4.5a.75.75 0 01-1.08 0l-4.24-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" /></svg>
                     </button>
                     <div x-cloak x-show="open" @click.outside="open=false" class="absolute right-0 mt-2 w-52 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg">
-                        <a href="{{ route('orders.index') }}" class="block px-4 py-3 text-sm hover:bg-slate-50">Riwayat Pesanan</a>
+                        <a href="{{ route('orders.index', [], false) }}" class="block px-4 py-3 text-sm hover:bg-slate-50">Riwayat Pesanan</a>
                         <a href="{{ route('profile.edit') }}" class="block px-4 py-3 text-sm hover:bg-slate-50">Profil</a>
                         <a href="{{ route('admin.dashboard') }}" class="block px-4 py-3 text-sm hover:bg-slate-50">Admin Panel</a>
                         <form method="POST" action="{{ route('logout') }}" class="border-t border-slate-200">

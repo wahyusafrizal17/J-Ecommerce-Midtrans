@@ -6,7 +6,7 @@
                 Status pembayaran akan diperbarui otomatis. Kamu bisa cek detail pesanan di halaman riwayat.
             </p>
             <div class="mt-6 flex flex-col gap-3 sm:flex-row">
-                <a href="{{ route('orders.index') }}" class="flex-1 rounded-xl bg-slate-900 px-5 py-3 text-center text-sm font-semibold text-white hover:bg-slate-800">
+                <a href="{{ route('orders.index', [], false) }}" class="flex-1 rounded-xl bg-slate-900 px-5 py-3 text-center text-sm font-semibold text-white hover:bg-slate-800">
                     Riwayat Pesanan
                 </a>
                 <a href="{{ route('home') }}" class="flex-1 rounded-xl border border-slate-200 px-5 py-3 text-center text-sm font-semibold hover:bg-slate-50">
