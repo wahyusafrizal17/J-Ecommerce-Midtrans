@@ -11,10 +11,16 @@ class PaymentController extends Controller
 {
     public function pay(Request $request, Order $order)
     {
-        abort_unless($order->user_id === $request->user()->id, 404);
+        if ($order->user_id !== $request->user()->id) {
+            abort(403, 'Pesanan ini bukan milik akun Anda.');
+        }
+
         $order->load('payment');
 
-        abort_if(!$order->payment?->snap_token, 404);
+        if (!$order->payment?->snap_token) {
+            return redirect()->route('orders.show', [$order], false)
+                ->withErrors(['payment' => 'Token pembayaran tidak tersedia. Silakan cek detail pesanan atau buat pesanan baru.']);
+        }
 
         return view('storefront.payments.pay', [
             'order' => $order,
