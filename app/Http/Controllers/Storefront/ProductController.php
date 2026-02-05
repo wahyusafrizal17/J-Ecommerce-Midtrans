@@ -62,10 +62,6 @@ class ProductController extends Controller
         $reviews = $product->reviews()->latest()->get();
         $userReview = null;
 
-        if (auth()->check()) {
-            $userReview = $reviews->firstWhere('user_id', auth()->id());
-        }
-
         $related = Product::query()
             ->active()
             ->where('category_id', $product->category_id)

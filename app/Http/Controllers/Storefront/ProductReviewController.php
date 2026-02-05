@@ -11,8 +11,6 @@ class ProductReviewController extends Controller
 {
     public function store(Request $request, Product $product)
     {
-        $this->middleware('auth');
-
         $data = $request->validate([
             'rating' => ['required', 'integer', 'min:1', 'max:5'],
             'comment' => ['required', 'string', 'max:2000'],
@@ -20,17 +18,13 @@ class ProductReviewController extends Controller
 
         $user = $request->user();
 
-        ProductReview::query()->updateOrCreate(
-            [
-                'product_id' => $product->id,
-                'user_id' => $user->id,
-            ],
-            [
-                'rating' => (int) $data['rating'],
-                'comment' => $data['comment'],
-                'status' => 'published',
-            ]
-        );
+        ProductReview::query()->create([
+            'product_id' => $product->id,
+            'user_id' => $user->id,
+            'rating' => (int) $data['rating'],
+            'comment' => $data['comment'],
+            'status' => 'published',
+        ]);
 
         return redirect()->to(route('products.show', [$product], false) . '#reviews')
             ->with('status', 'Terima kasih, ulasan Anda tersimpan.');

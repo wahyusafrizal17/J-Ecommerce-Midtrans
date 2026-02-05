@@ -93,21 +93,31 @@
                     <h2 class="text-sm font-semibold">Ulasan &amp; Rating</h2>
 
                     @auth
-                        <div class="mt-3 rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                            <p class="text-xs font-semibold text-slate-600 mb-2">
-                                {{ $userReview ? 'Ubah ulasan Anda' : 'Tulis ulasan tentang produk ini' }}
+                        <div class="mt-3 rounded-2xl border border-slate-200 bg-slate-50 p-4" x-data="{ rating: {{ (int) old('rating', 5) }} }">
+                            <p class="mb-2 text-xs font-semibold text-slate-600">
+                                Tulis ulasan tentang produk ini
                             </p>
                             <form action="{{ route('products.reviews.store', [$product], false) }}" method="POST" class="grid gap-3">
                                 @csrf
+                                <input type="hidden" name="rating" x-model="rating">
                                 <div class="flex items-center gap-2 text-sm">
                                     <span class="text-slate-700">Rating:</span>
                                     <div class="flex items-center gap-1">
                                         @for($i = 1; $i <= 5; $i++)
-                                            <label class="flex items-center gap-1">
-                                                <input type="radio" name="rating" value="{{ $i }}" class="h-4 w-4 text-amber-500 focus:ring-amber-500"
-                                                       @checked(old('rating', $userReview->rating ?? 5) == $i)>
-                                                <span class="text-xs text-slate-600">{{ $i }}</span>
-                                            </label>
+                                            <button
+                                                type="button"
+                                                class="focus:outline-none"
+                                                @click="rating = {{ $i }}"
+                                            >
+                                                <svg
+                                                    class="h-5 w-5 transition"
+                                                    :class="rating >= {{ $i }} ? 'text-amber-400' : 'text-slate-300 hover:text-amber-300'"
+                                                    viewBox="0 0 20 20"
+                                                    fill="currentColor"
+                                                >
+                                                    <path d="M10 15.27L16.18 19l-1.64-7.03L20 7.24l-7.19-.61L10 0 7.19 6.63 0 7.24l5.46 4.73L3.82 19z"/>
+                                                </svg>
+                                            </button>
                                         @endfor
                                     </div>
                                 </div>
@@ -115,7 +125,7 @@
                                     name="comment"
                                     rows="3"
                                     class="w-full rounded-2xl border border-slate-200 px-3 py-2 text-sm focus:border-slate-400 focus:ring-0"
-                                    placeholder="Ceritakan pengalamanmu dengan produk ini...">{{ old('comment', $userReview->comment ?? '') }}</textarea>
+                                    placeholder="Ceritakan pengalamanmu dengan produk ini...">{{ old('comment') }}</textarea>
                                 <button class="inline-flex items-center justify-center rounded-2xl bg-slate-900 px-4 py-2 text-xs font-semibold text-white hover:bg-slate-800">
                                     Simpan ulasan
                                 </button>
