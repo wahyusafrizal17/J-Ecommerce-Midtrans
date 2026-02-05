@@ -61,6 +61,7 @@ Route::prefix('store')->group(function () {
         Route::get('/orders', [StorefrontOrderController::class, 'index'])->name('orders.index');
         Route::get('/orders/{order}', [StorefrontOrderController::class, 'show'])->name('orders.show');
         Route::patch('/orders/{order}/confirm', [StorefrontOrderController::class, 'confirm'])->name('orders.confirm');
+        Route::get('/orders/{order}/invoice', [StorefrontOrderController::class, 'invoice'])->name('orders.invoice');
 
         Route::get('/payments/{order}', [PaymentController::class, 'pay'])->name('payments.pay');
     });

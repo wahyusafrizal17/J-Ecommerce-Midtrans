@@ -13,7 +13,7 @@
                     </p>
 
                     <div class="mt-6 grid gap-4 sm:grid-cols-2">
-                        <a href="https://wa.me/6281234567890" target="_blank"
+                        <a href="https://wa.me/6289650108447" target="_blank"
                            class="group flex items-center gap-3 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-900 transition hover:translate-y-0.5 hover:bg-emerald-100">
                             <span class="grid h-9 w-9 place-items-center rounded-2xl bg-emerald-500 text-xs font-bold text-white">
                                 WA
@@ -25,14 +25,14 @@
                             </div>
                         </a>
 
-                        <a href="https://instagram.com/cosplayerwardrobe" target="_blank"
+                    <a href="https://www.instagram.com/periwingkel_id?igsh=MWhlYTAxeTk0eWox" target="_blank"
                            class="group flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-900 transition hover:translate-y-0.5 hover:bg-slate-100">
                             <span class="grid h-9 w-9 place-items-center rounded-2xl bg-slate-900 text-xs font-bold text-white">
                                 IG
                             </span>
                             <div class="space-y-0.5">
                                 <p class="text-[11px] font-semibold uppercase tracking-wide text-slate-700">Instagram</p>
-                                <p class="text-sm">@cosplayerwardrobe</p>
+                            <p class="text-sm">@periwingkel_id</p>
                                 <p class="text-[11px] text-slate-600">Lihat katalog &amp; update terbaru</p>
                             </div>
                         </a>

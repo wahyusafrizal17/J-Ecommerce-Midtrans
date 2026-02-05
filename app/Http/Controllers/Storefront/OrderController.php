@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Storefront;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -54,6 +55,26 @@ class OrderController extends Controller
 
         return redirect()->to(route('orders.show', [$order], false))
             ->with('status', 'Terima kasih! Pesanan telah dikonfirmasi sudah diterima.');
+    }
+
+    public function invoice(Request $request, Order $order)
+    {
+        $currentUserId = (int) $request->user()->id;
+        $orderUserId = (int) $order->user_id;
+
+        if ($orderUserId !== $currentUserId) {
+            abort(403);
+        }
+
+        $order->load(['items.product', 'user']);
+
+        $pdf = Pdf::loadView('storefront.orders.invoice', [
+            'order' => $order,
+        ])->setPaper('a4');
+
+        $fileName = 'Invoice-' . $order->order_number . '.pdf';
+
+        return $pdf->download($fileName);
     }
 }
 

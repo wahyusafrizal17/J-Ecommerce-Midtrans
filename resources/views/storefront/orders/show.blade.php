@@ -139,6 +139,9 @@
                 @endif
 
                 <div class="mt-3">
+                    <a href="{{ route('orders.invoice', [$order], false) }}" class="mb-2 block rounded-xl border border-slate-200 bg-white px-4 py-3 text-center text-sm font-semibold hover:bg-slate-50">
+                        Download Invoice (PDF)
+                    </a>
                     <a href="{{ route('orders.index', [], false) }}" class="block rounded-xl border border-slate-200 px-4 py-3 text-center text-sm font-semibold hover:bg-slate-50">
                         Kembali
                     </a>
