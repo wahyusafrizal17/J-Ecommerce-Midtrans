@@ -14,6 +14,7 @@
         ['label' => 'Produk', 'route' => 'admin.products.index', 'match' => 'admin.products.*', 'icon' => 'box'],
         ['label' => 'Kategori', 'route' => 'admin.categories.index', 'match' => 'admin.categories.*', 'icon' => 'tag'],
         ['label' => 'Pesanan', 'route' => 'admin.orders.index', 'match' => 'admin.orders.*', 'icon' => 'receipt'],
+        ['label' => 'Ulasan', 'route' => 'admin.reviews.index', 'match' => 'admin.reviews.*', 'icon' => 'star'],
         ['label' => 'Pengguna', 'route' => 'admin.users.index', 'match' => 'admin.users.*', 'icon' => 'users'],
         ['label' => 'Laporan', 'route' => 'admin.reports.sales', 'match' => 'admin.reports.*', 'icon' => 'chart'],
     ];
@@ -29,6 +30,7 @@
             'box' => '<path d="M21 8.5 12 3 3 8.5l9 5 9-5Z"/><path d="M3 8.5V20l9 5 9-5V8.5"/><path d="M12 13.5V21"/>',
             'tag' => '<path d="M20 10V4H14L4 14l6 6 10-10Z"/><path d="M16 8h.01"/>',
             'receipt' => '<path d="M6 2h12v20l-2-1-2 1-2-1-2 1-2-1-2 1V2Z"/><path d="M9 7h6"/><path d="M9 11h6"/><path d="M9 15h6"/>',
+            'star' => '<path d="m12 3 2.4 4.87 5.37.78-3.88 3.78.92 5.36L12 14.77 7.19 17.8l.92-5.36L4.23 8.65l5.37-.78L12 3Z"/>',
             'users' => '<path d="M17 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M9.5 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
             'chart' => '<path d="M4 19V5"/><path d="M8 19V11"/><path d="M12 19V9"/><path d="M16 19V13"/><path d="M20 19V7"/>',
             default => '<path d="M12 20h.01"/>',

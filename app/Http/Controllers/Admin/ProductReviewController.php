@@ -32,5 +32,12 @@ class ProductReviewController extends Controller
 
         return redirect()->back()->with('status', 'Respon penjual berhasil disimpan.');
     }
+
+    public function destroy(ProductReview $review)
+    {
+        $review->delete();
+
+        return redirect()->back()->with('status', 'Ulasan berhasil dihapus.');
+    }
 }
 

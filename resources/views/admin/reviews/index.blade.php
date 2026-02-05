@@ -33,7 +33,7 @@
                         </p>
                     </div>
 
-                    <div class="md:col-span-8">
+                    <div class="md:col-span-8 space-y-3">
                         <form action="{{ route('admin.reviews.update', $review) }}" method="POST" class="grid gap-3">
                             @csrf
                             @method('PATCH')
@@ -64,6 +64,14 @@
                                     Simpan respon
                                 </button>
                             </div>
+                        </form>
+
+                        <form action="{{ route('admin.reviews.destroy', $review) }}" method="POST" onsubmit="return confirm('Hapus ulasan ini secara permanen?');">
+                            @csrf
+                            @method('DELETE')
+                            <button class="inline-flex items-center justify-center rounded-xl border border-rose-200 bg-rose-50 px-4 py-2 text-xs font-semibold text-rose-700 hover:bg-rose-100">
+                                Hapus ulasan
+                            </button>
                         </form>
                     </div>
                 </div>

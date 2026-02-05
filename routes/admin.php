@@ -33,5 +33,6 @@ Route::prefix('admin')
 
         Route::get('reviews', [ProductReviewController::class, 'index'])->name('reviews.index');
         Route::patch('reviews/{review}', [ProductReviewController::class, 'update'])->name('reviews.update');
+        Route::delete('reviews/{review}', [ProductReviewController::class, 'destroy'])->name('reviews.destroy');
     });
 
