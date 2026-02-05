@@ -29,7 +29,7 @@ class OrderController extends Controller
                 ->with('error', 'Pesanan ini bukan milik akun Anda atau sesi berubah. Silakan cek riwayat pesanan di bawah.');
         }
 
-        $order->load(['items', 'payment']);
+        $order->load(['items.product', 'payment']);
 
         return view('storefront.orders.show', compact('order'));
     }

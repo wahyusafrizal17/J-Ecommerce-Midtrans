@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Storefront;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -60,7 +61,17 @@ class ProductController extends Controller
 
         $averageRating = $product->averageRating();
         $reviews = $product->reviews()->latest()->get();
-        $userReview = null;
+        $canReview = false;
+
+        if (auth()->check()) {
+            $canReview = OrderItem::query()
+                ->where('product_id', $product->id)
+                ->whereHas('order', function ($q) {
+                    $q->where('user_id', auth()->id())
+                      ->where('status', 'selesai');
+                })
+                ->exists();
+        }
 
         $related = Product::query()
             ->active()
@@ -71,7 +82,7 @@ class ProductController extends Controller
             ->limit(6)
             ->get();
 
-        return view('storefront.products.show', compact('product', 'related', 'reviews', 'averageRating', 'userReview'));
+        return view('storefront.products.show', compact('product', 'related', 'reviews', 'averageRating', 'canReview'));
     }
 }
 

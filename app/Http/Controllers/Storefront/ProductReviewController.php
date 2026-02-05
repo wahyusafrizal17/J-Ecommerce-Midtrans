@@ -26,6 +26,12 @@ class ProductReviewController extends Controller
             'status' => 'published',
         ]);
 
+        $redirectTo = $request->input('redirect_to');
+
+        if ($redirectTo && filter_var($redirectTo, FILTER_VALIDATE_URL)) {
+            return redirect()->to($redirectTo)->with('status', 'Terima kasih, ulasan Anda tersimpan.');
+        }
+
         return redirect()->to(route('products.show', [$product], false) . '#reviews')
             ->with('status', 'Terima kasih, ulasan Anda tersimpan.');
     }
