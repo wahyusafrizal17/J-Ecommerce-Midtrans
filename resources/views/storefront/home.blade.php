@@ -61,33 +61,6 @@
             </div>
         </section>
 
-        <!-- FEATURES (like Karma) -->
-        <section class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            @php
-                $features = [
-                    ['title' => 'Free Delivery', 'desc' => 'Gratis ongkir sesuai syarat & ketentuan'],
-                    ['title' => 'Return Policy', 'desc' => 'Pengembalian mudah (sesuai ketentuan)'],
-                    ['title' => '24/7 Support', 'desc' => 'Layanan pelanggan responsif'],
-                    ['title' => 'Secure Payment', 'desc' => 'Pembayaran aman via Midtrans'],
-                ];
-            @endphp
-            @foreach($features as $f)
-                <div class="rounded-2xl border border-slate-200 bg-white p-5">
-                    <div class="flex items-start gap-3">
-                            <div class="grid h-10 w-10 place-items-center rounded-2xl bg-slate-900/10 text-slate-900">
-                            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M12 2l7 4v6c0 5-3 9-7 10-4-1-7-5-7-10V6z"/>
-                            </svg>
-                        </div>
-                        <div>
-                            <p class="text-sm font-extrabold text-slate-900">{{ $f['title'] }}</p>
-                            <p class="mt-1 text-sm text-slate-600">{{ $f['desc'] }}</p>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </section>
-
         <section class="grid gap-4">
             <div class="flex items-center justify-between">
                 <h2 class="text-lg font-semibold">Kategori</h2>
@@ -112,7 +85,7 @@
                     <a href="{{ route('products.show', [$p], false) }}" class="group overflow-hidden rounded-2xl border border-slate-200 bg-white hover:shadow-sm">
                         <div class="relative aspect-square bg-slate-100">
                             @if($p->primaryImage)
-                                <img src="{{ $p->primaryImage->url() }}" alt="{{ $p->name }}" class="h-full w-full object-cover transition group-hover:scale-[1.02]">
+                                <img src="{{ $p->primaryImage->url() }}" alt="{{ $p->name }}" class="h-full w-full object-cover transition group-hover:scale-[1.02] @if($p->stock <= 0) opacity-60 @endif">
                             @else
                                 <div class="grid h-full w-full place-items-center bg-gradient-to-br from-slate-200 to-slate-100">
                                     <div class="grid h-12 w-12 place-items-center rounded-2xl bg-white/80 text-slate-900">
@@ -120,7 +93,13 @@
                                     </div>
                                 </div>
                             @endif
-                            @if($p->is_recommended)
+                            @if($p->stock <= 0)
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span class="rounded-full bg-slate-900/90 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
+                                        Stok Habis
+                                    </span>
+                                </div>
+                            @elseif($p->is_recommended)
                                 <div class="absolute left-3 top-3 rounded-full bg-slate-900 px-2.5 py-1 text-[10px] font-extrabold text-white">RECOMMENDED</div>
                             @endif
                         </div>
@@ -144,12 +123,19 @@
                     <a href="{{ route('products.show', [$p], false) }}" class="group overflow-hidden rounded-2xl border border-slate-200 bg-white hover:shadow-sm">
                         <div class="relative aspect-square bg-slate-100">
                             @if($p->primaryImage)
-                                <img src="{{ $p->primaryImage->url() }}" alt="{{ $p->name }}" class="h-full w-full object-cover transition group-hover:scale-[1.02]">
+                                <img src="{{ $p->primaryImage->url() }}" alt="{{ $p->name }}" class="h-full w-full object-cover transition group-hover:scale-[1.02] @if($p->stock <= 0) opacity-60 @endif">
                             @else
                                 <div class="grid h-full w-full place-items-center bg-gradient-to-br from-slate-200 to-slate-100">
                                     <div class="grid h-12 w-12 place-items-center rounded-2xl bg-white/80 text-slate-900">
                                         <span class="text-lg font-extrabold">{{ strtoupper(mb_substr($p->name, 0, 1)) }}</span>
                                     </div>
+                                </div>
+                            @endif
+                            @if($p->stock <= 0)
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span class="rounded-full bg-slate-900/90 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
+                                        Stok Habis
+                                    </span>
                                 </div>
                             @endif
                         </div>

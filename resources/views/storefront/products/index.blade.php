@@ -58,9 +58,16 @@
             <div class="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
                 @forelse($products as $p)
                     <a href="{{ route('products.show', [$p], false) }}" class="group overflow-hidden rounded-2xl border border-slate-200 bg-white hover:shadow-sm">
-                        <div class="aspect-square bg-slate-100">
+                        <div class="relative aspect-square bg-slate-100">
                             @if($p->primaryImage)
-                                <img src="{{ $p->primaryImage->url() }}" alt="{{ $p->name }}" class="h-full w-full object-cover transition group-hover:scale-[1.02]">
+                                <img src="{{ $p->primaryImage->url() }}" alt="{{ $p->name }}" class="h-full w-full object-cover transition group-hover:scale-[1.02] @if($p->stock <= 0) opacity-60 @endif">
+                            @endif
+                            @if($p->stock <= 0)
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span class="rounded-full bg-slate-900/90 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
+                                        Stok Habis
+                                    </span>
+                                </div>
                             @endif
                         </div>
                         <div class="p-4">
@@ -68,7 +75,9 @@
                             <h3 class="mt-1 line-clamp-2 text-sm font-semibold">{{ $p->name }}</h3>
                             <div class="mt-2 flex items-center justify-between">
                                 <p class="text-sm font-bold">{{ $p->displayPrice() }}</p>
-                                @if($p->is_recommended)
+                                @if($p->stock <= 0)
+                                    <span class="text-[11px] font-semibold text-rose-600">Habis</span>
+                                @elseif($p->is_recommended)
                                     <span class="rounded-full bg-slate-900 px-2 py-1 text-[10px] font-semibold text-white">Rekomendasi</span>
                                 @endif
                             </div>

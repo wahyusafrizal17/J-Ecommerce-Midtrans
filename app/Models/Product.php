@@ -80,6 +80,18 @@ class Product extends Model
             ->orderBy('sort_order');
     }
 
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(ProductReview::class)->where('status', 'published');
+    }
+
+    public function averageRating(): float
+    {
+        $avg = (float) $this->reviews()->avg('rating');
+
+        return round($avg, 1);
+    }
+
     public function displayPrice(): string
     {
         return 'Rp ' . number_format($this->price_amount, 0, ',', '.');

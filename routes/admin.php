@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\ProductReviewController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,5 +30,8 @@ Route::prefix('admin')
 
         Route::get('reports/sales', [ReportController::class, 'sales'])->name('reports.sales');
         Route::get('reports/sales/export', [ReportController::class, 'exportSalesCsv'])->name('reports.sales.export');
+
+        Route::get('reviews', [ProductReviewController::class, 'index'])->name('reviews.index');
+        Route::patch('reviews/{review}', [ProductReviewController::class, 'update'])->name('reviews.update');
     });
 

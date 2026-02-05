@@ -6,7 +6,12 @@
                     <div>
                         <h1 class="text-lg font-semibold">Detail Pesanan</h1>
                         <p class="mt-1 text-sm text-slate-600">Order: <span class="font-semibold">{{ $order->order_number }}</span></p>
-                        <p class="mt-1 text-sm text-slate-600">Status: <span class="font-semibold">{{ $order->status }}</span></p>
+                        <p class="mt-1 text-sm text-slate-600">
+                            Status:
+                            <span class="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-xs font-semibold text-slate-800">
+                                {{ ucfirst($order->status) }}
+                            </span>
+                        </p>
                         <p class="mt-1 text-sm text-slate-600">Pembayaran: <span class="font-semibold">{{ $order->payment?->status ?? 'pending' }}</span></p>
                     </div>
                     <div class="text-right">
@@ -70,6 +75,22 @@
                         <a href="{{ route('payments.pay', [$order], false) }}" class="block rounded-xl bg-slate-900 px-4 py-3 text-center text-sm font-semibold text-white hover:bg-slate-800">
                             Bayar Sekarang
                         </a>
+                    </div>
+                @endif
+
+                @if(in_array($order->status, ['diproses', 'dikirim'], true))
+                    <div class="mt-3">
+                        <form action="{{ route('orders.confirm', [$order], false) }}" method="POST" onsubmit="return confirm('Konfirmasi bahwa pesanan sudah Anda terima?');">
+                            @csrf
+                            @method('PATCH')
+                            <button class="block w-full rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-center text-sm font-semibold text-emerald-900 hover:bg-emerald-100">
+                                Pesanan sudah saya terima
+                            </button>
+                        </form>
+                    </div>
+                @elseif($order->status === 'selesai')
+                    <div class="mt-3 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-xs text-emerald-900">
+                        Pesanan ini sudah dikonfirmasi <span class="font-semibold">diterima</span>. Terima kasih sudah berbelanja di CosplayerWardrobe!
                     </div>
                 @endif
 

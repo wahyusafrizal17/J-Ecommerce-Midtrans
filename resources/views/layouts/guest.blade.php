@@ -20,7 +20,7 @@
             <aside class="relative hidden overflow-hidden border-r border-slate-200 md:block">
                 <div class="absolute inset-0">
                     <img
-                        src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1800&q=80"
+                        src="{{ asset('home-banner.png') }}"
                         alt="Auth banner"
                         class="h-full w-full object-cover"
                         loading="lazy"

@@ -56,7 +56,15 @@ class ProductController extends Controller
     {
         abort_unless($product->is_active, 404);
 
-        $product->load(['category', 'images']);
+        $product->load(['category', 'images', 'reviews.user']);
+
+        $averageRating = $product->averageRating();
+        $reviews = $product->reviews()->latest()->get();
+        $userReview = null;
+
+        if (auth()->check()) {
+            $userReview = $reviews->firstWhere('user_id', auth()->id());
+        }
 
         $related = Product::query()
             ->active()
@@ -67,7 +75,7 @@ class ProductController extends Controller
             ->limit(6)
             ->get();
 
-        return view('storefront.products.show', compact('product', 'related'));
+        return view('storefront.products.show', compact('product', 'related', 'reviews', 'averageRating', 'userReview'));
     }
 }
 

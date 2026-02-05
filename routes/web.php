@@ -7,6 +7,8 @@ use App\Http\Controllers\Storefront\HomeController;
 use App\Http\Controllers\Storefront\OrderController as StorefrontOrderController;
 use App\Http\Controllers\Storefront\PaymentController;
 use App\Http\Controllers\Storefront\ProductController;
+use App\Http\Controllers\Storefront\ProductReviewController;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Route;
 
 // Root redirect ke storefront
@@ -42,7 +44,12 @@ Route::prefix('store')->group(function () {
     Route::patch('/cart/items/{cartItem}', [CartController::class, 'update'])->name('cart.items.update');
     Route::delete('/cart/items/{cartItem}', [CartController::class, 'destroy'])->name('cart.items.destroy');
 
+    // Penting: definisikan finish SEBELUM /payments/{order} agar tidak ketabrak binding {order}
+    Route::any('/payments/finish', [PaymentController::class, 'finish'])->name('payments.finish');
+
     Route::middleware('auth')->group(function () {
+        Route::post('/products/{product}/reviews', [ProductReviewController::class, 'store'])->name('products.reviews.store');
+
         Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
         Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
 
@@ -53,12 +60,13 @@ Route::prefix('store')->group(function () {
 
         Route::get('/orders', [StorefrontOrderController::class, 'index'])->name('orders.index');
         Route::get('/orders/{order}', [StorefrontOrderController::class, 'show'])->name('orders.show');
+        Route::patch('/orders/{order}/confirm', [StorefrontOrderController::class, 'confirm'])->name('orders.confirm');
 
         Route::get('/payments/{order}', [PaymentController::class, 'pay'])->name('payments.pay');
     });
-
-    Route::get('/payments/finish', [PaymentController::class, 'finish'])->name('payments.finish');
     Route::post('/payments/midtrans/notification', [PaymentController::class, 'notification'])->name('payments.midtrans.notification');
+
+    Route::view('/contact', 'storefront.contact')->name('contact');
 });
 
 require __DIR__.'/auth.php';

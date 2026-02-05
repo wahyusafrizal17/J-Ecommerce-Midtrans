@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Storefront;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\Payment;
 use App\Services\MidtransService;
 use Illuminate\Http\Request;
 
@@ -33,8 +34,39 @@ class PaymentController extends Controller
         ]);
     }
 
-    public function finish(Request $request)
+    public function finish(Request $request, MidtransService $midtrans)
     {
+        // Fallback: jika webhook tidak jalan (mis. di localhost), update status berdasar query dari Snap
+        $orderNumber = (string) $request->query('order_id', '');
+        $statusCode = (string) $request->query('status_code', '');
+        $transactionStatus = (string) $request->query('transaction_status', '');
+
+        if ($orderNumber !== '' && $statusCode === '200' && $transactionStatus !== '') {
+            /** @var Order|null $order */
+            $order = Order::query()->where('order_number', $orderNumber)->first();
+
+            if ($order) {
+                $mapped = $midtrans->mapPaymentStatus($transactionStatus, (string) $request->query('fraud_status'));
+
+                if ($mapped === 'paid') {
+                    $payment = Payment::query()->firstOrNew(['order_id' => $order->id]);
+                    $payment->provider = 'midtrans';
+                    $payment->status = 'paid';
+                    $payment->amount = (int) $order->grand_total_amount;
+                    $payment->midtrans_order_id = $orderNumber;
+                    if (blank($payment->paid_at)) {
+                        $payment->paid_at = now();
+                    }
+                    $payment->save();
+
+                    if ($order->status === 'pending') {
+                        $order->status = 'diproses';
+                        $order->save();
+                    }
+                }
+            }
+        }
+
         return view('storefront.payments.finish');
     }
 

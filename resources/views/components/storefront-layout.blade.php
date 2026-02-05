@@ -42,7 +42,7 @@
             @auth
                 <a href="{{ route('orders.index', [], false) }}" class="{{ request()->routeIs('orders.*') ? $navActive : $navBase }}">Orders</a>
             @endauth
-            <a href="{{ route('products.index', ['sort' => 'recommended'], false) }}" class="{{ request()->fullUrlIs(route('products.index', ['sort' => 'recommended'])) ? $navActive : $navBase }}">Deals</a>
+            <a href="{{ route('contact', [], false) }}" class="{{ request()->routeIs('contact') ? $navActive : $navBase }}">Contact Us</a>
         </nav>
 
         <div class="flex items-center gap-2">
@@ -83,7 +83,9 @@
                     <div x-cloak x-show="open" @click.outside="open=false" class="absolute right-0 mt-2 w-52 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg">
                         <a href="{{ route('orders.index', [], false) }}" class="block px-4 py-3 text-sm hover:bg-slate-50">Riwayat Pesanan</a>
                         <a href="{{ route('profile.edit') }}" class="block px-4 py-3 text-sm hover:bg-slate-50">Profil</a>
-                        <a href="{{ route('admin.dashboard') }}" class="block px-4 py-3 text-sm hover:bg-slate-50">Admin Panel</a>
+                        @if(auth()->user()->isAdmin())
+                            <a href="{{ route('admin.dashboard') }}" class="block px-4 py-3 text-sm hover:bg-slate-50">Admin Panel</a>
+                        @endif
                         <form method="POST" action="{{ route('logout') }}" class="border-t border-slate-200">
                             @csrf
                             <button class="w-full px-4 py-3 text-left text-sm hover:bg-slate-50">Logout</button>

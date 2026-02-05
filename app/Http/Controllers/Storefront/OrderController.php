@@ -33,5 +33,27 @@ class OrderController extends Controller
 
         return view('storefront.orders.show', compact('order'));
     }
+
+    public function confirm(Request $request, Order $order)
+    {
+        $currentUserId = (int) $request->user()->id;
+        $orderUserId = (int) $order->user_id;
+
+        if ($orderUserId !== $currentUserId) {
+            return redirect()->to(route('orders.index', [], false))
+                ->with('error', 'Pesanan ini bukan milik akun Anda.');
+        }
+
+        if (! in_array($order->status, ['diproses', 'dikirim'], true)) {
+            return redirect()->to(route('orders.show', [$order], false))
+                ->with('error', 'Pesanan hanya bisa dikonfirmasi diterima ketika statusnya diproses atau dikirim.');
+        }
+
+        $order->status = 'selesai';
+        $order->save();
+
+        return redirect()->to(route('orders.show', [$order], false))
+            ->with('status', 'Terima kasih! Pesanan telah dikonfirmasi sudah diterima.');
+    }
 }
 
